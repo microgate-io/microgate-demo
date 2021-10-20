@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "github.com/microgate-io/microgate-demo/todo";
+
+service TodoService {
+    rpc CreateTodo(CreateTodoRequest) returns (CreateTodoResponse) {}
+}
+
+message CreateTodoRequest{
+    string title = 1;    
+}
+  
+message CreateTodoResponse{
+    string id = 1;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "github.com/microgate-io/microgate-demo/user";
+
+service UserService {
+    rpc CheckUser(CheckUserRequest) returns (CheckUserResponse) {}
+}
+
+message CheckUserRequest{
+    string username = 1;    
+}
+  
+message CheckUserResponse{
+    bool is_valid = 1;
+}
