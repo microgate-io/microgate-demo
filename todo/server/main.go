@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"net"
-	"os"
 
 	"github.com/microgate-io/microgate-demo/todo"
 	"github.com/microgate-io/microgate-demo/user"
@@ -23,12 +22,9 @@ func main() {
 	apilog.InitClient(conn)
 
 	// get configuration
-	config, err := apiconfig.GetConfig(conn)
-	if err != nil {
-		apilog.Errorw(context.Background(), "failed GetConfig", "err", err)
-		// cannot continue
-		os.Exit(2)
-	}
+	config := apiconfig.GetConfig(conn)
+
+	// not sure if this is right location
 	apilog.GlobalDebug = config.FindBool("global_debug")
 
 	grpcServer := grpc.NewServer()
