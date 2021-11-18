@@ -12,6 +12,7 @@ import (
 	apilog "github.com/microgate-io/microgate-lib-go/v1/log"
 	apiqueue "github.com/microgate-io/microgate-lib-go/v1/queue"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -42,6 +43,10 @@ func main() {
 		apilog.Infow(context.Background(), "failed to listen", "err", err)
 	}
 	apilog.Infow(context.Background(), "serving gRPC", "addr", addr)
+
+	// expose filedescriptors of all services
+	reflection.Register(grpcServer)
+
 	grpcServer.Serve(lis)
 }
 
