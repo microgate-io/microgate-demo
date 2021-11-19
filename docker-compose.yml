@@ -1,0 +1,19 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  microgate:
+    command: go run ../microgate/cmd/microgate/todo/server/*.go
+    ports:
+      - "8080:8080"
+      - "9292:9292"
+    volumes:
+      - .:/code
+      - logvolume01:/var/log
+    links:
+      - user-server
+      - todo-server
+  todo-server:
+    command: go run ./todo/server/main.go
+  user-server:  
+    command: go run ./user/server/main.go  
+volumes:
+  logvolume01: {}
