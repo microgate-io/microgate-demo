@@ -4,18 +4,17 @@ import (
 	"context"
 	"log"
 
-	"github.com/shurcooL/graphql"
+	"github.com/Khan/genqlient/graphql"
 )
 
-type CreateTodoRequest struct {
-}
-
 func main() {
-	client := graphql.NewClient("http://localhost:8080/graphql", nil)
-	query := CreateTodoRequest{}
-	err := client.Query(context.Background(), &query, nil)
+	client := graphql.NewClient("http://localhost:8080/query", nil)
+	req := CreateTodoRequestInput{Title: "dennis"}
+	resp, err := todoServiceCreateTodo(context.Background(), client, req)
 	if err != nil {
-		log.Println(err)
+		log.Fatal(err)
 	}
-
+	log.Println(resp.TodoServiceCreateTodo.Id)
 }
+
+//go:generate go run github.com/Khan/genqlient genqlient.yaml
