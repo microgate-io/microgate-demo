@@ -36,6 +36,9 @@ func main() {
 	// for processing incoming async messages
 	registerHandler(grpcServer, conn, config)
 
+	// start receiving async message
+	subscribeTodo(conn, config)
+
 	// start gRPC server
 	addr := ":9090"
 	lis, err := net.Listen("tcp", addr)
@@ -64,8 +67,10 @@ func registerTodo(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Confi
 func registerHandler(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Configuration) {
 	messageService := &MessageHandlingServiceImpl{}
 	apiqueue.RegisterMessageHandlingServiceServer(s, messageService)
+}
 
-	// subscribe to receive messages on the handler
+// subscribe such that we will start handling TodoRequest messages send asynchronously
+func subscribeTodo(conn *grpc.ClientConn, config *apiconfig.Configuration) {
 	c := apiqueue.NewQueueingServiceClient(conn)
 	// this could cause an immediate callback on the message handling service
 	_, err := c.Subscribe(context.Background(), &apiqueue.SubscribeRequest{SubscriptionId: "my-subscription-from-config"})
