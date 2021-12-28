@@ -34,7 +34,10 @@ func main() {
 	registerTodo(grpcServer, conn, config)
 
 	// for processing incoming async messages
-	registerHandler(grpcServer, conn, config)
+	registerAsyncHandler(grpcServer, conn, config)
+
+	// for processing incoming sync HTTP transcoded requests
+	registerTranscodingHandler(grpcServer, conn, config)
 
 	// start receiving async message
 	subscribeTodo(conn, config)
@@ -64,7 +67,7 @@ func registerTodo(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Confi
 }
 
 // create a new PubSub message handler service and register it to the server.
-func registerHandler(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Configuration) {
+func registerAsyncHandler(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Configuration) {
 	messageService := &MessageHandlingServiceImpl{}
 	apiqueue.RegisterMessageHandlingServiceServer(s, messageService)
 }
@@ -77,4 +80,8 @@ func subscribeTodo(conn *grpc.ClientConn, config *apiconfig.Configuration) {
 	if err != nil {
 		apilog.Errorw(context.Background(), "failed to subscribe", "err", err)
 	}
+}
+
+func registerTranscodingHandler(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Configuration) {
+	// apihttpjson.Register...Server(s)
 }
