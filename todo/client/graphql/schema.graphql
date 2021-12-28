@@ -1,0 +1,22 @@
+directive @TodoService on FIELD_DEFINITION
+input CreateTodoRequestInput {
+  title: String
+}
+
+type CreateTodoResponse {
+  id: String
+}
+
+type Mutation {
+  todoServiceCreateTodo(in: CreateTodoRequestInput): CreateTodoResponse
+}
+
+interface Node {
+  id: ID!
+}
+
+type Query {
+  dummy: Boolean
+  node(id: ID!): Node
+}
+

@@ -1,0 +1,5 @@
+mutation todoServiceCreateTodo($in: CreateTodoRequestInput!) {
+  todoServiceCreateTodo(in: $in) {
+    id
+  }
+}
