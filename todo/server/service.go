@@ -45,7 +45,7 @@ func (s *TodoImpl) CreateTodo(ctx context.Context, req *todo.CreateTodoRequest) 
 	// publish
 	_, err = s.queueClient.Publish(ctx, &apiqueue.PublishRequest{Topic: "todo", Message: []byte("Hello microgate")})
 	if err != nil {
-		return apilog.ErrorWithLog(ctx, err, "failed to publish todo created")
+		return nil, apilog.ErrorWithLog(ctx, err, "failed to publish todo created")
 	}
 
 	return &todo.CreateTodoResponse{
