@@ -36,9 +36,6 @@ func main() {
 	// for processing incoming async messages
 	registerAsyncHandler(grpcServer, conn, config)
 
-	// for processing incoming sync HTTP transcoded requests
-	registerTranscodingHandler(grpcServer, conn, config)
-
 	// start receiving async message
 	subscribeTodo(conn, config)
 
@@ -80,8 +77,4 @@ func subscribeTodo(conn *grpc.ClientConn, config *apiconfig.Configuration) {
 	if err != nil {
 		apilog.Errorw(context.Background(), "failed to subscribe", "err", err)
 	}
-}
-
-func registerTranscodingHandler(s *grpc.Server, conn *grpc.ClientConn, config *apiconfig.Configuration) {
-	// apihttpjson.Register...Server(s)
 }
