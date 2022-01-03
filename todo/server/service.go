@@ -7,7 +7,6 @@ import (
 
 	"github.com/microgate-io/microgate-demo/todo"
 	"github.com/microgate-io/microgate-demo/user"
-	apidb "github.com/microgate-io/microgate-lib-go/v1/db"
 	apilog "github.com/microgate-io/microgate-lib-go/v1/log"
 	apiqueue "github.com/microgate-io/microgate-lib-go/v1/queue"
 )
@@ -17,9 +16,6 @@ type TodoImpl struct {
 
 	// this is for calling a remote UserService
 	userClient user.UserServiceClient
-
-	// this is for calling a local Microgate DatabaseService
-	dbClient apidb.DatabaseServiceClient
 
 	// this is for notifying asynchronously about a Todo created
 	queueClient apiqueue.QueueingServiceClient
