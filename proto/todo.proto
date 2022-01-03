@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package todo.v1;
+
 option go_package = "github.com/microgate-io/microgate-demo/todo";
 
 service TodoService {

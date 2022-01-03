@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option go_package = "github.com/microgate-io/microgate-demo/user";
 
+package user.v1;
+
 service UserService {
     rpc CheckUser(CheckUserRequest) returns (CheckUserResponse) {}
 }
