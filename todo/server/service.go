@@ -36,10 +36,11 @@ func (s *TodoImpl) CreateTodo(ctx context.Context, req *todo.CreateTodoRequest) 
 	}
 
 	// store a ToDo in your database
+	// simulate that by generating a new ID
 	id := fmt.Sprintf("todo-%d", time.Now().UnixMilli())
 
 	// publish
-	_, err = s.queueClient.Publish(ctx, &apiqueue.PublishRequest{Topic: "todo", Message: []byte("Hello microgate")})
+	_, err = s.queueClient.Publish(ctx, &apiqueue.PublishRequest{Topic: "todo", Message: []byte(req.Title)})
 	if err != nil {
 		return nil, apilog.ErrorWithLog(ctx, err, "failed to publish todo created")
 	}
